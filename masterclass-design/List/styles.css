@@ -1,0 +1,247 @@
+:root {
+    --primary-green: #2E8B57;
+    --dark-green: #1A4D2E;
+    --light-green: #E8F5E9;
+    --accent-gold: #D4AF37;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --bg-light: #f8f9fa;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--text-dark);
+    line-height: 1.7;
+}
+
+/* Navbar */
+.navbar {
+    background-color: white;
+    box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+    padding: 20px 0;
+    transition: all 0.3s;
+}
+
+.navbar.scrolled {
+    padding: 10px 0;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 26px;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-brand span {
+    color: var(--primary-green);
+}
+
+.navbar-brand img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.nav-link {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+    margin: 0 12px;
+    position: relative;
+    padding: 8px 0 !important;
+}
+
+.nav-link:hover {
+    color: var(--primary-green) !important;
+}
+
+.nav-link.active {
+    color: var(--primary-green) !important;
+}
+
+.nav-link.active:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-green);
+    animation: underline 0.3s ease-out;
+}
+
+@keyframes underline {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+.btn-primary {
+    background-color: var(--primary-green);
+    border-color: var(--primary-green);
+    padding: 10px 25px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--dark-green);
+    border-color: var(--dark-green);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 139, 87, 0.3);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border: 2px solid var(--primary-green);
+    color: var(--primary-green);
+    padding: 10px 25px;
+    font-weight: 500;
+}
+
+.btn-outline:hover {
+    background-color: var(--primary-green);
+    color: white;
+}
+
+
+
+/*Masterclass*/
+#masterclass-list {
+  padding-top:80px !important;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+#masterclass-list h2 {
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: var(--text-color);
+}
+
+#masterclass-list .search-bar {
+  display: flex;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto 40px;
+  position: relative;
+}
+
+#masterclass-list .search-bar input {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  font-size: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--primary-color);
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+#masterclass-list .search-bar .search-icon {
+  position: absolute;
+  right: 16px;
+  font-size: 18px;
+  color: var(--primary-color);
+}
+
+.masterclass-month {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 40px 0 20px;
+  color: var(--text-color);
+}
+
+.masterclass-item {
+  display: flex;
+  background-color: var(--background-color);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  border: 1px solid var(--primary-color);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.masterclass-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.masterclass-item .date-block {
+  background-color: var(--primary-green);
+  color: white;
+  padding: 20px 16px;
+  text-align: center;
+  flex-shrink: 0;
+  width: 140px;
+}
+
+.date-block .day-range {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.date-block .month-range {
+  font-size: 13px;
+  margin-top: 4px;
+  text-transform: uppercase;
+}
+
+.date-block .location {
+  margin-top: 14px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.date-block .location i {
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.masterclass-item .details-block {
+  padding: 18px 20px;
+  flex-grow: 1;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+}
+
+.details-block h5 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-color);
+}
+
+.details-block .type {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.details-block .lecturer {
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.details-block .audience {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
