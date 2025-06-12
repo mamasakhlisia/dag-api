@@ -9,6 +9,8 @@ import MasterclassDashboard from './components/Masterclass/MasterclassDashboard'
 import TemplateList from './components/Mastertemplate/TemplateList';
 import TemplateCreate from './components/Mastertemplate/TemplateCreate';
 import TemplateEdit from './components/Mastertemplate/TemplateEdit';
+import DoctorCreate from './components/Doctors/DoctorCreate';
+import DoctorList from './components/Doctors/DoctorList';
 
 
 function App() {
@@ -23,6 +25,9 @@ function App() {
         <Route path="/templates" element={<TemplateList />} />
         <Route path="/templates/edit/:id" element={<TemplateEdit />} />
         <Route path="/templates/create" element={<TemplateCreate />} />
+
+        <Route path="/doctors/create" element={<DoctorCreate />}/>
+        <Route path="/doctors/list" element={<DoctorList />}/>
         {/* <Route path="/dashboard/templates" element={<TemplateList />} />
         <Route path="/dashboard/static" element={<StaticEditor />} /> */}
       </Routes>

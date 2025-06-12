@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/masterclass/templates")
@@ -21,12 +22,28 @@ public class MasterclassTemplateController {
     private MasterclassTemplateService service;
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(
+    public ResponseEntity<?> create(
             @ModelAttribute MasterclassTemplate template,
             @RequestParam("files") List<MultipartFile> files) {
 
-        service.saveWithImages(template, files);
-        return ResponseEntity.ok("MasterclassTemplate created with images.");
+        try {
+            // Detailed logging
+            System.out.println("=== Received Data ===");
+            System.out.println("Title: " + template.getTitle());
+            System.out.println("Lecturer ID: " + (template.getLecturer() != null ? template.getLecturer().getId() : "null"));
+            System.out.println("Files received: " + files.stream()
+                    .map(f -> f.getOriginalFilename() + " (" + f.getSize() + " bytes)")
+                    .collect(Collectors.joining(", ")));
+
+            service.saveWithImages(template, files);
+            return ResponseEntity.ok("MasterclassTemplate created successfully");
+
+        } catch (Exception e) {
+            System.err.println("Error creating template: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
+        }
     }
 
     @GetMapping("/image/{filename}")
