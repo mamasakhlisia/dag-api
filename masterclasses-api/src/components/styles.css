@@ -1,0 +1,476 @@
+body {
+    font-family: sans-serif;
+    background: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background: #004080;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+  }
+  
+  nav {
+    background: #e6e6e6;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #004080;
+    font-weight: bold;
+  }
+  
+  main {
+    padding: 2rem;
+  }
+  
+  .card {
+    background: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  
+  .card h2 {
+    margin-top: 0;
+  }
+  
+  .buttons {
+    margin-top: 1rem;
+  }
+  
+  .buttons a {
+    text-decoration: none;
+    color: white;
+    background: #004080;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin-right: 1rem;
+  }
+  
+  .buttons .danger {
+    background: darkred;
+  }
+  
+  .form-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 600px;
+    margin: auto;
+    margin-top: 2rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  }
+  
+  .form-container h1 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  label {
+    display: block;
+    margin-top: 1rem;
+  }
+  
+  input, select {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+  
+  button {
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background: #004080;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+  .dashboard-container {
+    font-family: sans-serif;
+    background: #f5f7fa;
+    min-height: 100vh;
+  }
+  
+  .dashboard-header {
+    background: #004080;
+    color: white;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .dashboard-main {
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 1000px;
+  }
+  
+  .dashboard-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: #004080;
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .dashboard-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  }
+  
+  .dashboard-card h2 {
+    margin-top: 0;
+  }
+  
+  .dashboard-card p {
+    color: #333;
+  }
+  .form-page {
+    padding: 2rem;
+    max-width: 700px;
+    margin: auto;
+  }
+  
+  .form-page h1 {
+    color: #004080;
+  }
+  
+  .form-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  
+  .form-box label {
+    font-weight: bold;
+  }
+  
+  .form-box input,
+  .form-box textarea {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .form-button {
+    background: #004080;
+    color: white;
+    border: none;
+    padding: 0.75rem;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .list-page {
+    padding: 2rem;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  .list-table {
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .list-header, .list-row {
+    display: grid;
+    grid-template-columns: 1fr 3fr 2fr;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .list-header {
+    background: #004080;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .list-row:nth-child(even) {
+    background: #f9f9f9;
+  }
+  
+  .list-button {
+    margin-right: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: #004080;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .list-button.danger {
+    background: #cc0000;
+  }
+/* Template List Specific Styles */
+.template-list-page {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  color: #2d3748;
+}
+
+.template-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.template-list-header h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #1a365d;
+  margin: 0;
+}
+
+.template-create-button {
+  background-color: #4299e1;
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+}
+
+.template-create-button:hover {
+  background-color: #3182ce;
+  transform: translateY(-1px);
+}
+
+.template-list-container {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+}
+
+.template-list-table {
+  display: grid;
+  grid-template-columns: 80px 1fr 200px 220px;
+  width: 100%;
+}
+
+.template-list-header-row {
+  display: contents;
+  font-weight: 600;
+}
+
+.template-list-header-cell {
+  padding: 1rem 1.5rem;
+  background-color: #f7fafc;
+  color: #4a5568;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+}
+
+.template-list-row {
+  display: contents;
+}
+
+.template-list-cell {
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #edf2f7;
+  transition: background-color 0.2s ease;
+}
+
+.template-list-row:hover .template-list-cell {
+  background-color: #f8fafc;
+}
+
+.template-id-cell {
+  font-family: 'Roboto Mono', monospace;
+  color: #718096;
+  font-size: 0.9rem;
+}
+
+.template-title-cell {
+  font-weight: 500;
+  color: #2d3748;
+}
+
+.template-image-gallery {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.template-image-container {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.template-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.2s ease;
+}
+
+.template-image:hover {
+  transform: scale(1.05);
+}
+
+.template-no-image {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #a0aec0;
+  font-size: 0.9rem;
+}
+
+.template-no-image-icon {
+  font-size: 1.2rem;
+}
+
+.template-actions-cell {
+  justify-content: flex-end;
+}
+
+.template-action-buttons {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: nowrap;
+}
+
+.template-action-button {
+  padding: 0.5rem 0.9rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
+.template-edit-button {
+  background-color: #edf2f7;
+  color: #2d3748;
+}
+
+.template-edit-button:hover {
+  background-color: #e2e8f0;
+}
+
+.template-delete-button {
+  background-color: #fff5f5;
+  color: #c53030;
+}
+
+.template-delete-button:hover {
+  background-color: #fed7d7;
+}
+
+.template-button-icon {
+  font-size: 0.9rem;
+}
+
+.template-loading {
+  padding: 2rem;
+  text-align: center;
+  color: #718096;
+  font-style: italic;
+}
+
+.template-empty-message {
+  grid-column: 1 / -1;
+  padding: 2rem;
+  text-align: center;
+  color: #718096;
+  font-style: italic;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+  .template-list-table {
+    grid-template-columns: 70px 1fr 180px 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .template-list-table {
+    grid-template-columns: 60px 1fr 150px 180px;
+  }
+  
+  .template-list-header-cell,
+  .template-list-cell {
+    padding: 0.8rem 1rem;
+  }
+  
+  .template-action-button {
+    padding: 0.4rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  .template-image-container {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 576px) {
+  .template-list-table {
+    grid-template-columns: 50px 1fr 130px 160px;
+  }
+  
+  .template-action-button {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+  }
+  
+  .template-button-icon {
+    display: none;
+  }
+  
+  .template-list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

@@ -22,5 +22,6 @@ public class Masterclass {
     @ManyToOne
     @JoinColumn(name = "template_id", nullable = false)
     private MasterclassTemplate template;
+    @Column(nullable = false, columnDefinition = "boolean default false")
     private boolean isHappening;
 }
