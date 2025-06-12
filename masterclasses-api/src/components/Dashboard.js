@@ -11,7 +11,7 @@ const Dashboard = () => {
 
       <main className="dashboard-main">
         <section className="dashboard-grid">
-          <Link to="/masterclasses" className="dashboard-card">
+          <Link to="/masterclasses/list" className="dashboard-card">
             <h2>Masterclasses</h2>
             <p>View, edit, or delete masterclasses</p>
           </Link>
@@ -21,12 +21,20 @@ const Dashboard = () => {
             <p>Start a new masterclass</p>
           </Link>
 
-          <Link to="/templates" className="dashboard-card">
+          <Link to="/templates/list" className="dashboard-card">
             <h2>Templates</h2>
             <p>View, edit, or delete masterclasses</p>
           </Link>
           <Link to="/templates/create" className="dashboard-card">
             <h2>Create Template</h2>
+            <p>Create a new masterclass template</p>
+          </Link>
+          <Link to="/doctors/list" className="dashboard-card">
+            <h2>Doctors</h2>
+            <p>Create a new masterclass template</p>
+          </Link>
+          <Link to="/doctors/create" className="dashboard-card">
+            <h2>Create Doctors</h2>
             <p>Create a new masterclass template</p>
           </Link>
         </section>

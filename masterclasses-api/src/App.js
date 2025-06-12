@@ -18,11 +18,11 @@ function App() {
     <Router>
       <Routes>
         <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/masterclasses" element={<MasterclassDashboard />} />
+        <Route path="/masterclasses/list" element={<MasterclassDashboard />} />
         <Route path="/masterclasses/edit/:id" element={<MasterclassEdit />} />
         <Route path="/masterclasses/create" element={<MasterclassCreate />} />
 
-        <Route path="/templates" element={<TemplateList />} />
+        <Route path="/templates/list" element={<TemplateList />} />
         <Route path="/templates/edit/:id" element={<TemplateEdit />} />
         <Route path="/templates/create" element={<TemplateCreate />} />
 

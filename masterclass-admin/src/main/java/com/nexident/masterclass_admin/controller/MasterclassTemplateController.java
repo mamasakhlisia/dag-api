@@ -28,12 +28,12 @@ public class MasterclassTemplateController {
 
         try {
             // Detailed logging
-            System.out.println("=== Received Data ===");
-            System.out.println("Title: " + template.getTitle());
-            System.out.println("Lecturer ID: " + (template.getLecturer() != null ? template.getLecturer().getId() : "null"));
-            System.out.println("Files received: " + files.stream()
-                    .map(f -> f.getOriginalFilename() + " (" + f.getSize() + " bytes)")
-                    .collect(Collectors.joining(", ")));
+//            System.out.println("=== Received Data ===");
+//            System.out.println("Title: " + template.getTitle());
+//            System.out.println("Lecturer ID: " + (template.getLecturer() != null ? template.getLecturer().getId() : "null"));
+//            System.out.println("Files received: " + files.stream()
+//                    .map(f -> f.getOriginalFilename() + " (" + f.getSize() + " bytes)")
+//                    .collect(Collectors.joining(", ")));
 
             service.saveWithImages(template, files);
             return ResponseEntity.ok("MasterclassTemplate created successfully");
