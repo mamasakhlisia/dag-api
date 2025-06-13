@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Dashboard from './pages/Dashboard/Dashboard';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import MasterclassesList from './pages/MasterclassList/MasterclassList';
+import { useState, useEffect } from 'react';
+import { MasterclassAPI } from './api';
 
 function App() {
+  const [masterclasses, setMasterclasses] = useState([]);
+
+  useEffect(() => {
+    const fetchMasterclasses = async () => {
+      try {
+        const data = await MasterclassAPI.getAllMasterclasses();
+        console.log(data);
+        setMasterclasses(data);
+      } catch (error) {
+        console.error('Error fetching masterclasses:', error);
+      }
+    };
+
+    fetchMasterclasses();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/masterclasses" element={<MasterclassesList />} />
+        </Routes>
+      </Router>
     </div>
   );
 }

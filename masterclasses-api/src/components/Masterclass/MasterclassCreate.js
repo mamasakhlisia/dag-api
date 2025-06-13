@@ -46,7 +46,7 @@ const MasterclassCreate = () => {
     setSuccess(false);
 
     try {
-      // Format the date correctly for the API
+      // Format the date correctly for the APIf
       const payload = {
         slug: formData.slug,
         date: new Date(formData.date).toISOString(),
