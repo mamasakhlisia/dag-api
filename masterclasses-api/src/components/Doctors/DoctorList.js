@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { deleteDoctor, getAllDoctors } from '../../api/api'; // Adjust the path to your api file
 
 const DoctorList = () => {
   const [doctors, setDoctors] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState(null); // Changed to null initially
 
   useEffect(() => {
     const fetchDoctors = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/doctor/list');
+        const response = await getAllDoctors();
         setDoctors(response.data);
       } catch (err) {
-        setError('Failed to load doctors');
+        setError(err.message || 'Failed to load doctors');
         console.error('Error:', err);
       } finally {
         setIsLoading(false);
@@ -23,9 +23,26 @@ const DoctorList = () => {
     fetchDoctors();
   }, []);
 
-  if (isLoading) return <div>Loading doctors...</div>;
-  if (error) return <div style={{ color: 'red' }}>{error}</div>;
+  const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this doctor?')) {
+      try {
+        await deleteDoctor(id);
+        setDoctors(doctors.filter(doctor => doctor.id !== id));
+        setError(null); // Clear any previous errors on success
+      } catch (err) {
+        console.error('Error deleting doctor:', err);
+        // Extract the error message properly
+        const errorMessage = err.response?.data?.message || 
+                           err.response?.data?.error || 
+                           err.message || 
+                           'Failed to delete doctor';
+        setError(errorMessage);
+      }
+    }
+  };
 
+  if (isLoading) return <div>Loading doctors...</div>;
+  
   return (
     <div style={{ maxWidth: '800px', margin: '0 auto', padding: '20px' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
@@ -41,6 +58,19 @@ const DoctorList = () => {
         </Link>
       </div>
 
+      {/* Error display */}
+      {error && (
+        <div style={{ 
+          color: 'white', 
+          backgroundColor: '#dc3545', 
+          padding: '10px', 
+          borderRadius: '4px',
+          marginBottom: '20px'
+        }}>
+          {error}
+        </div>
+      )}
+
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
         {doctors.map(doctor => (
           <div key={doctor.id} style={{ border: '1px solid #ddd', borderRadius: '8px', overflow: 'hidden' }}>
@@ -49,11 +79,30 @@ const DoctorList = () => {
                 src={`http://localhost:8080/api/doctor/image/${doctor.imagePath}`} 
                 alt={`${doctor.firstName} ${doctor.lastName}`}
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                onError={(e) => {
+                  e.target.onerror = null; 
+                  e.target.src = 'https://via.placeholder.com/300x200?text=No+Image';
+                }}
               />
             </div>
             <div style={{ padding: '15px' }}>
               <h2 style={{ margin: '0 0 10px 0' }}>{doctor.firstName} {doctor.lastName}</h2>
               <p style={{ color: '#666', margin: '0 0 10px 0' }}>{doctor.specialty}</p>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <button 
+                  onClick={() => handleDelete(doctor.id)}
+                  style={{
+                    padding: '6px 12px',
+                    background: '#dc3545',
+                    color: 'white',
+                    border: 'none',
+                    borderRadius: '4px',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </div>
         ))}

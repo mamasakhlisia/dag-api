@@ -108,12 +108,6 @@ const TemplateList = () => {
                     <td className="table-cell actions-cell">
                       <div className="action-buttons">
                         <Link
-                          to={`/templates/edit/${template.id}`}
-                          className="action-btn edit-btn"
-                        >
-                          Edit
-                        </Link>
-                        <Link
                           to="#"
                           onClick={(e) => {
                             e.preventDefault();

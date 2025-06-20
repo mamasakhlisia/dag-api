@@ -47,4 +47,9 @@ public class DoctorService {
             throw new RuntimeException("Failed to save doctor or image", e);
         }
     }
+
+    public String deleteDoctor(long id){
+        doctorRepository.deleteById(id);
+        return "Doctor has been deleted successfully";
+    }
 }

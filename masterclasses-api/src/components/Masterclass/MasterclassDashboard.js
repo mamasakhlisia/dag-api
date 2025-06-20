@@ -95,12 +95,6 @@ const MasterclassDashboard = () => {
               </div>
               
               <div className="card-footer">
-                <Link 
-                  to={`/masterclass/edit/${masterclass.id}`} 
-                  className="action-button edit-button"
-                >
-                  Edit
-                </Link>
                 <Link
                   to="#"
                   onClick={(e) => {

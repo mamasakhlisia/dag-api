@@ -47,4 +47,13 @@ public class DoctorController {
     public ResponseEntity<List<Doctor>> listAllDoctors(){
         return new ResponseEntity<>(doctorService.getAllDoctors(), HttpStatus.OK);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteDoctor(@PathVariable long id){
+        try{
+            return new ResponseEntity<>(doctorService.deleteDoctor(id), HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage() + " with the id" + id, HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }
