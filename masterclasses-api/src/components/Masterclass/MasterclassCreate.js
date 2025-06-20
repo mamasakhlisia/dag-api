@@ -6,6 +6,10 @@ const MasterclassCreate = () => {
   const [formData, setFormData] = useState({
     slug: '',
     date: '',
+    daysLong: 1,
+    definate: false,
+    theoretical: false,
+    link: '',
     templateId: ''
   });
   const [templates, setTemplates] = useState([]);
@@ -32,10 +36,10 @@ const MasterclassCreate = () => {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, type, checked } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: type === 'checkbox' ? checked : value
     }));
   };
 
@@ -46,15 +50,17 @@ const MasterclassCreate = () => {
     setSuccess(false);
 
     try {
-      // Format the date correctly for the APIf
       const payload = {
         slug: formData.slug,
         date: new Date(formData.date).toISOString(),
+        daysLong: parseInt(formData.daysLong),
+        definate: formData.definate,
+        theoretical: formData.theoretical,
+        link: formData.link,
         templateId: parseInt(formData.templateId)
       };
 
       const response = await createMasterclass(payload);
-      console.log('Creation response:', response); // Debug log
       
       if (response.status === 201) {
         setSuccess(true);
@@ -62,13 +68,17 @@ const MasterclassCreate = () => {
         setFormData({
           slug: '',
           date: '',
+          daysLong: 1,
+          definate: false,
+          theoretical: false,
+          link: '',
           templateId: templates.length > 0 ? templates[0].id.toString() : ''
         });
       } else {
         throw new Error('Unexpected response status');
       }
     } catch (err) {
-      console.error('Creation error:', err); // Debug log
+      console.error('Creation error:', err);
       setError(err.response?.data?.message || err.message || 'Failed to create masterclass');
     } finally {
       setIsSubmitting(false);
@@ -111,6 +121,49 @@ const MasterclassCreate = () => {
         required
       />
 
+      <label htmlFor="daysLong">Duration (days)</label>
+      <input
+        type="number"
+        id="daysLong"
+        name="daysLong"
+        min="1"
+        value={formData.daysLong}
+        onChange={handleChange}
+        required
+      />
+
+      <div className="checkbox-group">
+        <label>
+          <input
+            type="checkbox"
+            name="definate"
+            checked={formData.definate}
+            onChange={handleChange}
+          />
+          Definite
+        </label>
+
+        <label>
+          <input
+            type="checkbox"
+            name="theoretical"
+            checked={formData.theoretical}
+            onChange={handleChange}
+          />
+          Theoretical
+        </label>
+      </div>
+
+      <label htmlFor="link">Signup Link</label>
+      <input
+        type="url"
+        id="link"
+        name="link"
+        value={formData.link}
+        onChange={handleChange}
+        placeholder="https://example.com/signup"
+      />
+
       <label htmlFor="template">Template</label>
       <select
         id="template"
@@ -121,7 +174,7 @@ const MasterclassCreate = () => {
       >
         {templates.map(template => (
           <option key={template.id} value={template.id}>
-            {template.name || `Template ${template.id}`}
+            {template.title}
           </option>
         ))}
       </select>

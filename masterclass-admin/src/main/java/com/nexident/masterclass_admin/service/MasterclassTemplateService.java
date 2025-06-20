@@ -58,4 +58,10 @@ public class MasterclassTemplateService {
     public List<MasterclassTemplate> getAllTemplates(){
         return repository.findAll();
     }
+
+
+    public String deleteTemplateById(long id){
+        repository.deleteById(id);
+        return "Template has been successfully deleted";
+    }
 }

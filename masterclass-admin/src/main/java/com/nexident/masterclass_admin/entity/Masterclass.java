@@ -18,10 +18,13 @@ public class Masterclass {
     private long id;
     private String slug;
     private LocalDateTime date;
-
+    private int daysLong;
+    @Column(nullable = false, columnDefinition = "boolean default false")
+    private boolean definate;
+    @Column(nullable = true, columnDefinition = "boolean default true")
+    private boolean theoretical;
+    private String signupLink;
     @ManyToOne
     @JoinColumn(name = "template_id", nullable = false)
     private MasterclassTemplate template;
-    @Column(nullable = false, columnDefinition = "boolean default false")
-    private boolean isHappening;
 }

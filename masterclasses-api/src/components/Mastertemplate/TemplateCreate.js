@@ -5,7 +5,7 @@ import { getAllDoctors, createTemplateWithImages } from '../../api/api';
 const TemplateCreate = () => {
   const [formData, setFormData] = useState({
     title: '',
-    lecturerId: '', // Changed from lecturer object to simple ID
+    lecturerId: '',
     shortDescription: '',
     fullDescription: '',
     price: ''
@@ -32,10 +32,24 @@ const TemplateCreate = () => {
   };
 
   const handleFileChange = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    setFiles(selectedFiles);
-    const urls = selectedFiles.map(file => URL.createObjectURL(file));
-    setPreviewUrls(urls);
+    const newFiles = Array.from(e.target.files);
+    if (newFiles.length === 0) return;
+
+    const newPreviewUrls = newFiles.map(file => URL.createObjectURL(file));
+    
+    setFiles(prev => [...prev, ...newFiles]);
+    setPreviewUrls(prev => [...prev, ...newPreviewUrls]);
+    
+    // Clear the file input to allow selecting the same files again
+    e.target.value = null;
+  };
+
+  const removeImage = (index) => {
+    // Revoke the object URL to prevent memory leaks
+    URL.revokeObjectURL(previewUrls[index]);
+    
+    setFiles(prev => prev.filter((_, i) => i !== index));
+    setPreviewUrls(prev => prev.filter((_, i) => i !== index));
   };
 
   const handleSubmit = async (e) => {
@@ -47,14 +61,13 @@ const TemplateCreate = () => {
     try {
       const formDataToSend = new FormData();
       
-      // Append all fields as simple key-value pairs
       formDataToSend.append('title', formData.title);
       formDataToSend.append('lecturer.id', formData.lecturerId);
       formDataToSend.append('shortDescription', formData.shortDescription);
       formDataToSend.append('fullDescription', formData.fullDescription);
       formDataToSend.append('price', formData.price);
       
-      // Append files
+      // Append all files
       files.forEach(file => {
         formDataToSend.append('files', file);
       });
@@ -164,26 +177,36 @@ const TemplateCreate = () => {
           required
         />
 
-        <label>Upload Images</label>
+        <label>Upload Images (You can select multiple files)</label>
         <input
           type="file"
           multiple
           accept="image/*"
           onChange={handleFileChange}
+          className="file-input"
         />
 
         {previewUrls.length > 0 && (
           <div className="image-previews">
-            <h4>Selected Images:</h4>
+            <h4>Selected Images ({previewUrls.length}):</h4>
             <div className="preview-container">
               {previewUrls.map((url, index) => (
-                <img 
-                  key={index}
-                  src={url}
-                  alt={`Preview ${index + 1}`}
-                  className="preview-image"
-                  onLoad={() => URL.revokeObjectURL(url)}
-                />
+                <div key={index} className="preview-wrapper">
+                  <img 
+                    src={url}
+                    alt={`Preview ${index + 1}`}
+                    className="preview-image"
+                    onLoad={() => URL.revokeObjectURL(url)}
+                  />
+                  <button
+                    type="button"
+                    className="remove-image-btn"
+                    onClick={() => removeImage(index)}
+                    title="Remove image"
+                  >
+                    ×
+                  </button>
+                </div>
               ))}
             </div>
           </div>

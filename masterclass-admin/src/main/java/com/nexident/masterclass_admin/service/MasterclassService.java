@@ -19,15 +19,18 @@ public class MasterclassService {
         this.templateRepository = templateRepository;
     }
 
-    public Masterclass createMasterclass(String slug, LocalDateTime date, long templateId) {
+    public Masterclass createMasterclass(String slug, LocalDateTime date, int daysLong, boolean definate, boolean theoretical, String signupLink, long templateId) {
         MasterclassTemplate template = templateRepository.findById(templateId)
                 .orElseThrow(() -> new RuntimeException("Template not found with the id of: " + templateId));
 
         Masterclass masterclass = new Masterclass();
         masterclass.setSlug(slug);
         masterclass.setDate(date);
+        masterclass.setDaysLong(daysLong);
+        masterclass.setDefinate(definate);
+        masterclass.setTheoretical(theoretical);
+        masterclass.setSignupLink(signupLink);
         masterclass.setTemplate(template);
-
         return masterclassRepository.save(masterclass);
     }
 
@@ -38,6 +41,13 @@ public class MasterclassService {
     public Masterclass getById(long id){
         return masterclassRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Masterclass with this id does not exist"));
+    }
+
+
+    public String deleteById(long id){
+        masterclassRepository.deleteById(id);
+        return "Masterclass has been deleted";
+
     }
 
 }

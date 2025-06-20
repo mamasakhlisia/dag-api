@@ -10,33 +10,43 @@ const api = axios.create({
   },
 });
 
-// Add request interceptor to handle errors globally
+// Request interceptor
 api.interceptors.request.use(
-  config => {
-    // You can add auth tokens here if needed
+  (config) => {
+    // Add auth token if available
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     return config;
   },
-  error => {
+  (error) => {
     return Promise.reject(error);
   }
 );
 
-// Add response interceptor to handle errors globally
+// Response interceptor
 api.interceptors.response.use(
-  response => response,
-  error => {
+  (response) => response,
+  (error) => {
     if (error.response) {
-      // The request was made and the server responded with a status code
-      console.error('API Error:', error.response.data);
-      console.error('Status:', error.response.status);
-      console.error('Headers:', error.response.headers);
+      console.error('API Error:', {
+        data: error.response.data,
+        status: error.response.status,
+        headers: error.response.headers,
+      });
+      
+      // Handle specific status codes
+      if (error.response.status === 401) {
+        // Handle unauthorized access
+        window.location.href = '/login';
+      }
     } else if (error.request) {
-      // The request was made but no response was received
       console.error('API Error: No response received', error.request);
     } else {
-      // Something happened in setting up the request that triggered an Error
       console.error('API Error:', error.message);
     }
+    
     return Promise.reject(error);
   }
 );
@@ -45,11 +55,17 @@ api.interceptors.response.use(
 export const getAllMasterclasses = () => api.get('/masterclass/list');
 export const getMasterclassById = (id) => api.get(`/masterclass/${id}`);
 export const createMasterclass = (data) => api.post('/masterclass/create', data);
+export const updateMasterclass = (id, data) => api.put(`/masterclass/update/${id}`, data);
+export const deleteMasterclass = (id) => api.delete(`/masterclass/delete/${id}`);
 
 // ========== TEMPLATES ==========
 export const getAllTemplates = () => api.get('/masterclass/templates/list');
 export const getTemplateById = (id) => api.get(`/masterclass/templates/${id}`);
+export const createTemplate = (data) => api.post('/masterclass/templates/create', data);
+export const updateTemplate = (id, data) => api.put(`/masterclass/templates/update/${id}`, data);
+export const deleteTemplate = (id) => api.delete(`/masterclass/templates/delete/${id}`);
 
+// For file uploads
 export const createTemplateWithImages = (formData) => {
   return api.post('/masterclass/templates/create', formData, {
     headers: {
@@ -60,11 +76,10 @@ export const createTemplateWithImages = (formData) => {
 
 export const getTemplateImage = (filename) => {
   return api.get(`/masterclass/templates/image/${filename}`, {
-    responseType: 'arraybuffer', // Important for binary data like images
+    responseType: 'arraybuffer',
   });
 };
 
-// Helper function to get image URL
 export const getTemplateImageUrl = (filename) => 
   `${BASE_URL}/masterclass/templates/image/${filename}`;
 
@@ -72,6 +87,13 @@ export const getTemplateImageUrl = (filename) =>
 export const getAllDoctors = () => api.get('/doctor/list');
 export const getDoctorById = (id) => api.get(`/doctor/${id}`);
 export const createDoctor = (data) => api.post('/doctor/create', data);
+export const updateDoctor = (id, data) => api.put(`/doctor/update/${id}`, data);
+export const deleteDoctor = (id) => api.delete(`/doctor/delete/${id}`);
+
+// ========== AUTHENTICATION ==========
+export const login = (credentials) => api.post('/auth/login', credentials);
+export const register = (userData) => api.post('/auth/register', userData);
+export const getCurrentUser = () => api.get('/auth/me');
 
 // ========== EXPORT ALL API FUNCTIONS ==========
 export default {
@@ -79,10 +101,15 @@ export default {
   getAllMasterclasses,
   getMasterclassById,
   createMasterclass,
+  updateMasterclass,
+  deleteMasterclass,
   
   // Templates
   getAllTemplates,
   getTemplateById,
+  createTemplate,
+  updateTemplate,
+  deleteTemplate,
   createTemplateWithImages,
   getTemplateImage,
   getTemplateImageUrl,
@@ -91,4 +118,11 @@ export default {
   getAllDoctors,
   getDoctorById,
   createDoctor,
+  updateDoctor,
+  deleteDoctor,
+  
+  // Auth
+  login,
+  register,
+  getCurrentUser,
 };
