@@ -46,7 +46,7 @@ const Navbar = () => {
                   "nav-link" + (isActive ? " active" : "")
                 }
               >
-                Home
+                მთავარი
               </NavLink>
             </li>
             <li className="nav-item">
@@ -56,7 +56,7 @@ const Navbar = () => {
                   "nav-link" + (isActive ? " active" : "")
                 }
               >
-                Masterclasses
+                მასტერკლასები
               </NavLink>
             </li>
             <li className="nav-item">
@@ -65,7 +65,7 @@ const Navbar = () => {
                 className="nav-link"
                 onClick={handleScrollTo("about")}
               >
-                About
+                ჩვენს შესახებ
               </a>
             </li>
             <li className="nav-item">
@@ -73,7 +73,7 @@ const Navbar = () => {
                 href="/doctors"
                 className="nav-link"
               >
-                Doctors
+                ექიმები
               </a>
             </li>
             <li className="nav-item">
@@ -82,12 +82,12 @@ const Navbar = () => {
                 className="nav-link"
                 onClick={handleScrollTo("contact")}
               >
-                Contact
+                კონტაქტი
               </a>
             </li>
           </ul>
           <a href="#registration" className="btn btn-primary ms-lg-4">
-            Register Now
+            დარეგისტრირდი
           </a>
         </div>
       </div>

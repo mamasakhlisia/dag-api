@@ -14,10 +14,7 @@ const HeroSection = () => {
               </p>
               <div className="d-flex flex-wrap gap-3">
                 <a href="/masterclasses" className="btn btn-primary">
-                  View Masterclasses
-                </a>
-                <a href="#registration" className="btn btn-outline">
-                  Register Now
+                  ყველა მასტერკლასი
                 </a>
               </div>
             </div>

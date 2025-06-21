@@ -27,7 +27,7 @@ const AboutSection = () => {
             />
           </div>
           <div className="col-lg-6">
-            <h2 className="section-title">About Our Masterclasses</h2>
+            <h2 className="section-title">ჩვენს შესახებ</h2>
             <p>
               Dental Excellence Masterclasses are intensive, hands-on training
               programs designed for dental professionals who want to refine
@@ -46,7 +46,7 @@ const AboutSection = () => {
             </p>
             <div className="mt-4">
               <button onClick={handleExploreClick} className="btn btn-primary">
-                Explore Programs
+                გაეცანი პროგრამებს
               </button>
             </div>
           </div>

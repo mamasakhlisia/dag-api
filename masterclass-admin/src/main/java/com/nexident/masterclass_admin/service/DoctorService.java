@@ -48,8 +48,20 @@ public class DoctorService {
         }
     }
 
-    public String deleteDoctor(long id){
+    public String deleteDoctor(long id) {
+        Doctor doctor = doctorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
+
+        if (doctor.getImagePath() != null && !doctor.getImagePath().isEmpty()) {
+            try {
+                Path filePath = Paths.get(uploadDir + doctor.getImagePath());
+                Files.deleteIfExists(filePath);
+            } catch (IOException e) {
+                System.err.println("Failed to delete image file: " + e.getMessage());
+            }
+        }
         doctorRepository.deleteById(id);
+
         return "Doctor has been deleted successfully";
     }
 }

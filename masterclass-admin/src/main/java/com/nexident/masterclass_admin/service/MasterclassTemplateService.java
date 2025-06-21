@@ -60,8 +60,24 @@ public class MasterclassTemplateService {
     }
 
 
-    public String deleteTemplateById(long id){
+    public String deleteTemplateById(long id) {
+        MasterclassTemplate template = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Template not found with id: " + id));
+        if (template.getImageUrls() != null && !template.getImageUrls().isEmpty()) {
+            deleteImageFiles(template.getImageUrls());
+        }
         repository.deleteById(id);
-        return "Template has been successfully deleted";
+        return "Template and associated images have been successfully deleted";
+    }
+
+    private void deleteImageFiles(List<String> imageFileNames) {
+        for (String fileName : imageFileNames) {
+            try {
+                Path filePath = Paths.get(uploadDir + fileName);
+                Files.deleteIfExists(filePath);
+            } catch (IOException e) {
+                System.err.println("Failed to delete image file: " + fileName + " - " + e.getMessage());
+            }
+        }
     }
 }
