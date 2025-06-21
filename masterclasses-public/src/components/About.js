@@ -1,16 +1,31 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchHomeContent } from "../api/homeApi";
 
 const AboutSection = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [aboutContent, setAboutContent] = useState([]);
+
+  useEffect(() => {
+    const loadContent = async () => {
+      try {
+        const data = await fetchHomeContent();
+        setAboutContent(data.about || []); // Fallback to empty array if no data
+      } catch (error) {
+        console.error("Failed to load about content:", error);
+        setAboutContent([]); // Set empty array on error
+      }
+    };
+    
+    loadContent();
+  }, []);
 
   const handleExploreClick = (e) => {
     e.preventDefault();
-
     if (location.pathname !== "/masterclasses") {
       navigate("/masterclasses");
     } else {
-      // If already on /masterclasses, you can scroll if needed (optional)
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
@@ -28,22 +43,11 @@ const AboutSection = () => {
           </div>
           <div className="col-lg-6">
             <h2 className="section-title">ჩვენს შესახებ</h2>
-            <p>
-              Dental Excellence Masterclasses are intensive, hands-on training
-              programs designed for dental professionals who want to refine
-              their skills and stay at the forefront of modern dentistry.
-            </p>
-            <p>
-              Our programs are led by internationally recognized instructors who
-              bring decades of clinical experience and teaching expertise to
-              each session. We focus on practical, immediately applicable
-              techniques that you can implement in your practice right away.
-            </p>
-            <p>
-              With small class sizes and state-of-the-art facilities, we ensure
-              personalized attention and optimal learning conditions for all
-              participants.
-            </p>
+            
+            {aboutContent.map((paragraph, index) => (
+              <p key={index}>{paragraph}</p>
+            ))}
+
             <div className="mt-4">
               <button onClick={handleExploreClick} className="btn btn-primary">
                 გაეცანი პროგრამებს

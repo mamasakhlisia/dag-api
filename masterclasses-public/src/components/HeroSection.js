@@ -1,4 +1,26 @@
+import { useEffect, useState } from "react";
+import { fetchHomeContent } from "../api/homeApi";
+
 const HeroSection = () => {
+const [header, setHeader] = useState([]);
+const [paragraph, setParagraph] = useState([]);
+
+
+useEffect(() =>{
+  const loadContent = async () => {
+    try {
+      const data = await fetchHomeContent();
+      console.log(data);
+      setHeader(data.navHeader || []); 
+      setParagraph(data.navParagraph || []);
+    } catch (error) {
+      console.error("Failed to load about content:", error);
+    }
+  };
+
+  loadContent();
+}, []);
+ 
   return (
     <section className="hero-section">
       <div className="container">
@@ -6,11 +28,10 @@ const HeroSection = () => {
           <div className="col-lg-7">
             <div className="hero-content">
               <h1 className="hero-title">
-                Advance Your Dental Practice With Our Expert-Led Masterclasses
+                {header}
               </h1>
               <p className="hero-subtitle">
-                Learn cutting-edge techniques from world-renowned dental
-                professionals and take your skills to the next level.
+                {paragraph}
               </p>
               <div className="d-flex flex-wrap gap-3">
                 <a href="/masterclasses" className="btn btn-primary">

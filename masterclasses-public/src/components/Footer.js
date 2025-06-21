@@ -1,4 +1,23 @@
+import { useEffect, useState } from "react";
+import { fetchHomeContent } from "../api/homeApi";
+
 const FooterSelection = () => {
+  const [text, setText] = useState([]);
+
+  useEffect(() =>{
+    const loadContent = async () => {
+      try {
+        const data = await fetchHomeContent();
+        console.log(data);
+        setText(data.footerText || []); 
+      } catch (error) {
+        console.error("Failed to load about content:", error);
+      }
+    };
+  
+    loadContent();
+  }, []);
+
   return (
     <footer id="contact">
       <div className="container">
@@ -54,9 +73,7 @@ const FooterSelection = () => {
           <div className="col-lg-3 col-md-6">
             <h4 className="footer-title">Dental Academy Georgia</h4>
             <p>
-              Providing world-class dental education since 2010. Our
-              masterclasses are designed to help dental professionals achieve
-              clinical excellence.
+              {text}
             </p>
 
           </div>
