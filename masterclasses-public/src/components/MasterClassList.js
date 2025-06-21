@@ -32,12 +32,12 @@ const MasterclassList = () => {
   return (
     <section id="masterclass-list" className="py-5 mt-5">
       <div className="container">
-        <h2 className="text-center mb-4">All Courses</h2>
+        <h2 className="text-center mb-4">ყველა მასტერკლასი</h2>
 
-        {/* <div className="search-bar mb-4">
+        <div className="search-bar mb-4">
           <input type="text" placeholder="Search" />
           <span className="search-icon">🔍</span>
-        </div> */}
+        </div>
 
         {masterclasses.map((item) => {
           const { month, day, time } = formatDate(item.date);
@@ -60,7 +60,7 @@ const MasterclassList = () => {
                   {item.template.lecturer.firstName + " " + item.template.lecturer.lastName}
                 </p>
                 <p className="audience">{item.template.shortDescription}</p>
-                <p className="time">{time}</p> {/* Optional: Display time */}
+                <p className="time">{time}</p>
               </div>
             </Link>
           );
