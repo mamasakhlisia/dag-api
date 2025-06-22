@@ -1,6 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../styles/single.css";
+import FooterSelection from "./Footer.js";
 
 const MasterclassDetail = () => {
   const navigate = useNavigate();
@@ -198,6 +199,7 @@ const MasterclassDetail = () => {
           </div>
         </div>
       </section>
+      <FooterSelection />
     </div>
   );
 };
