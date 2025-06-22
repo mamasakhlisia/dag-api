@@ -1,7 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getAllTemplates, getTemplateImageUrl, deleteTemplate } from '../../api/api';
-import '../styles.css';
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  getAllTemplates,
+  getTemplateImageUrl,
+  deleteTemplate,
+} from "../../api/api";
+import "../styles.css";
 
 const TemplateList = () => {
   const [templates, setTemplates] = useState([]);
@@ -20,25 +24,31 @@ const TemplateList = () => {
       const response = await getAllTemplates();
       setTemplates(response.data);
     } catch (err) {
-      console.error('Error fetching templates:', err);
-      setError('Failed to load templates. Please try again.');
+      console.error("Error fetching templates:", err);
+      setError("შაბლონების ჩატვირთვა ვერ მოხერხდა. სცადეთ თავიდან.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleDelete = async (templateId, templateTitle) => {
-    if (!window.confirm(`Are you sure you want to delete "${templateTitle}"? This action cannot be undone.`)) {
+    if (
+      !window.confirm(
+        `დარწმუნებული ხარ, რომ გსურს "${templateTitle}" წაშლა? ეს ქმედება შეუქცევადია.`
+      )
+    ) {
       return;
     }
 
     try {
       await deleteTemplate(templateId);
-      setTemplates(templates.filter(t => t.id !== templateId));
-      alert(`Template "${templateTitle}" has been deleted successfully.`);
+      setTemplates(templates.filter((t) => t.id !== templateId));
+      alert(`შაბლონი "${templateTitle}" წარმატებით წაიშალა.`);
     } catch (err) {
-      console.error('Error deleting template:', err);
-      setError(`Failed to delete template. ${err.response?.data?.message || ''}`);
+      console.error("Error deleting template:", err);
+      setError(
+        `შაბლონის წაშლა ვერ მოხერხდა. ${err.response?.data?.message || ""}`
+      );
       fetchTemplates();
     }
   };
@@ -46,9 +56,9 @@ const TemplateList = () => {
   return (
     <div className="template-list-container">
       <div className="template-list-header">
-        <h1 className="template-list-title">Masterclass Templates</h1>
+        <h1 className="template-list-title">მასტერკლასის შაბლონები</h1>
         <Link to="/templates/create" className="template-create-btn">
-          <span className="btn-icon">+</span> New Template
+          <span className="btn-icon">+</span> ახალი შაბლონი
         </Link>
       </div>
 
@@ -62,7 +72,7 @@ const TemplateList = () => {
       {isLoading ? (
         <div className="loading-state">
           <div className="spinner"></div>
-          <p>Loading templates...</p>
+          <p>შაბლონების ჩატვირთვა...</p>
         </div>
       ) : (
         <div className="template-table-wrapper">
@@ -71,37 +81,39 @@ const TemplateList = () => {
               <thead>
                 <tr>
                   <th className="table-header id-col">ID</th>
-                  <th className="table-header">Title</th>
-                  <th className="table-header">Preview</th>
-                  <th className="table-header actions-col">Actions</th>
+                  <th className="table-header">სათაური</th>
+                  <th className="table-header">გადახედვა</th>
+                  <th className="table-header actions-col">ქმედებები</th>
                 </tr>
               </thead>
               <tbody>
-                {templates.map(template => (
+                {templates.map((template) => (
                   <tr key={template.id} className="template-row">
                     <td className="table-cell id-cell">{template.id}</td>
                     <td className="table-cell title-cell">{template.title}</td>
                     <td className="table-cell preview-cell">
                       {template.imageUrls && template.imageUrls.length > 0 ? (
                         <div className="image-preview-container">
-                          {template.imageUrls.slice(0, 3).map((filename, idx) => (
-                            <div key={idx} className="preview-thumbnail">
-                              <img
-                                src={getTemplateImageUrl(filename)}
-                                alt={`${template.title} preview ${idx + 1}`}
-                                className="thumbnail-image"
-                                onError={(e) => {
-                                  e.target.onerror = null;
-                                  e.target.src = '/placeholder-image.jpg';
-                                }}
-                              />
-                            </div>
-                          ))}
+                          {template.imageUrls
+                            .slice(0, 3)
+                            .map((filename, idx) => (
+                              <div key={idx} className="preview-thumbnail">
+                                <img
+                                  src={getTemplateImageUrl(filename)}
+                                  alt={`${template.title} გადახედვა ${idx + 1}`}
+                                  className="thumbnail-image"
+                                  onError={(e) => {
+                                    e.target.onerror = null;
+                                    e.target.src = "/placeholder-image.jpg";
+                                  }}
+                                />
+                              </div>
+                            ))}
                         </div>
                       ) : (
                         <div className="no-preview">
                           <span className="no-preview-icon">🖼️</span>
-                          No images
+                          სურათები არ არის
                         </div>
                       )}
                     </td>
@@ -115,7 +127,7 @@ const TemplateList = () => {
                           }}
                           className="action-btn delete-btn"
                         >
-                          Delete
+                          წაშლა
                         </Link>
                       </div>
                     </td>
@@ -125,9 +137,9 @@ const TemplateList = () => {
             </table>
           ) : (
             <div className="empty-state">
-              <p>No templates found.</p>
+              <p>შაბლონები არ მოიძებნა.</p>
               <Link to="/templates/create" className="create-link">
-                Create your first template
+                შექმენი შენი პირველი შაბლონი
               </Link>
             </div>
           )}

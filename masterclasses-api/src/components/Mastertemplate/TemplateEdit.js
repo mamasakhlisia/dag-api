@@ -1,30 +1,32 @@
-import React from 'react';
-import '../styles.css'
+import React from "react";
+import "../styles.css";
 
 const TemplateEdit = () => {
   return (
     <div className="form-page">
-      <h1>Edit Masterclass Template</h1>
+      <h1>შაბლონის რედაქტირება</h1>
       <form className="form-box">
-        <label>Title</label>
-        <input type="text" defaultValue="Existing title" />
+        <label>სათაური</label>
+        <input type="text" defaultValue="არსებული სათაური" />
 
-        <label>Lecturer Name</label>
-        <input type="text" defaultValue="Existing lecturer" />
+        <label>ლექტორის სახელი</label>
+        <input type="text" defaultValue="არსებული ლექტორი" />
 
-        <label>Short Description</label>
-        <textarea rows="3" defaultValue="Existing short summary" />
+        <label>მოკლე აღწერა</label>
+        <textarea rows="3" defaultValue="არსებული მოკლე აღწერა" />
 
-        <label>Full Description</label>
-        <textarea rows="6" defaultValue="Existing full content" />
+        <label>სრული აღწერა</label>
+        <textarea rows="6" defaultValue="არსებული სრული აღწერა" />
 
-        <label>Price</label>
-        <input type="text" defaultValue="Existing price" />
+        <label>ფასი</label>
+        <input type="text" defaultValue="არსებული ფასი" />
 
-        <label>Replace/Add Images</label>
+        <label>შეცვალე/დაამატე სურათ(ებ)ი</label>
         <input type="file" multiple />
 
-        <button type="submit" className="form-button">Save Changes</button>
+        <button type="submit" className="form-button">
+          ცვლილებების შენახვა
+        </button>
       </form>
     </div>
   );

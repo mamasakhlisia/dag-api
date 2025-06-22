@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
-import { createMasterclass, getAllTemplates } from '../../api/api';
-import '../styles.css';
+import React, { useState, useEffect } from "react";
+import { createMasterclass, getAllTemplates } from "../../api/api";
+import "../styles.css";
 
 const MasterclassCreate = () => {
   const [formData, setFormData] = useState({
-    slug: '',
-    date: '',
+    slug: "",
+    date: "",
     daysLong: 1,
     definate: false,
     theoretical: false,
-    link: '',
-    templateId: ''
+    link: "",
+    templateId: "",
   });
   const [templates, setTemplates] = useState([]);
   const [error, setError] = useState(null);
@@ -24,10 +24,13 @@ const MasterclassCreate = () => {
         const response = await getAllTemplates();
         setTemplates(response.data);
         if (response.data.length > 0) {
-          setFormData(prev => ({ ...prev, templateId: response.data[0].id.toString() }));
+          setFormData((prev) => ({
+            ...prev,
+            templateId: response.data[0].id.toString(),
+          }));
         }
       } catch (err) {
-        setError('Failed to load templates');
+        setError("შაბლონების ჩატვირთვა ვერ მოხერხდა");
       } finally {
         setIsLoadingTemplates(false);
       }
@@ -37,9 +40,9 @@ const MasterclassCreate = () => {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: type === 'checkbox' ? checked : value
+      [name]: type === "checkbox" ? checked : value,
     }));
   };
 
@@ -57,50 +60,59 @@ const MasterclassCreate = () => {
         definate: formData.definate,
         theoretical: formData.theoretical,
         link: formData.link,
-        templateId: parseInt(formData.templateId)
+        templateId: parseInt(formData.templateId),
       };
 
       const response = await createMasterclass(payload);
-      
+
       if (response.status === 201) {
         setSuccess(true);
-        // Reset form after successful submission
         setFormData({
-          slug: '',
-          date: '',
+          slug: "",
+          date: "",
           daysLong: 1,
           definate: false,
           theoretical: false,
-          link: '',
-          templateId: templates.length > 0 ? templates[0].id.toString() : ''
+          link: "",
+          templateId: templates.length > 0 ? templates[0].id.toString() : "",
         });
       } else {
-        throw new Error('Unexpected response status');
+        throw new Error("მოულოდელი პასუხის სტატუსი");
       }
     } catch (err) {
-      console.error('Creation error:', err);
-      setError(err.response?.data?.message || err.message || 'Failed to create masterclass');
+      console.error("შექმნის შეცდომა:", err);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "მასტერკლასის შექმნა ვერ მოხერხდა"
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   if (isLoadingTemplates) {
-    return <div className="form-container">Loading templates...</div>;
+    return <div className="form-container">შაბლონების ჩატვირთვა...</div>;
   }
 
   if (templates.length === 0) {
-    return <div className="form-container">No templates available. Please create templates first.</div>;
+    return (
+      <div className="form-container">
+        შაბლონები არ არის. გთხოვთ, ჯერ შექმნათ შაბლონები.
+      </div>
+    );
   }
 
   return (
     <form className="form-container" onSubmit={handleSubmit}>
-      <h1>Create Masterclass</h1>
+      <h1>მასტერკლასის შექმნა</h1>
 
       {error && <div className="error-message">{error}</div>}
-      {success && <div className="success-message">Masterclass created successfully!</div>}
+      {success && (
+        <div className="success-message">მასტერკლასი წარმატებით შეიქმნა!</div>
+      )}
 
-      <label htmlFor="slug">Slug (URL identifier)</label>
+      <label htmlFor="slug">Slug (URL-ის იდენტიფიკატორი)</label>
       <input
         type="text"
         id="slug"
@@ -108,10 +120,10 @@ const MasterclassCreate = () => {
         value={formData.slug}
         onChange={handleChange}
         required
-        placeholder="e.g., advanced-implantology-2023"
+        placeholder="მაგ., advanced-implantology-2023"
       />
 
-      <label htmlFor="date">Date & Time</label>
+      <label htmlFor="date">თარიღი და დრო</label>
       <input
         type="datetime-local"
         id="date"
@@ -121,7 +133,7 @@ const MasterclassCreate = () => {
         required
       />
 
-      <label htmlFor="daysLong">Duration (days)</label>
+      <label htmlFor="daysLong">ხანგრძლივობა (დღეები)</label>
       <input
         type="number"
         id="daysLong"
@@ -140,7 +152,7 @@ const MasterclassCreate = () => {
             checked={formData.definate}
             onChange={handleChange}
           />
-          Definite
+          დადგენილი
         </label>
 
         <label>
@@ -150,11 +162,11 @@ const MasterclassCreate = () => {
             checked={formData.theoretical}
             onChange={handleChange}
           />
-          Theoretical
+          თეორიული
         </label>
       </div>
 
-      <label htmlFor="link">Signup Link</label>
+      <label htmlFor="link">რეგისტრაციის ბმული</label>
       <input
         type="url"
         id="link"
@@ -164,7 +176,7 @@ const MasterclassCreate = () => {
         placeholder="https://example.com/signup"
       />
 
-      <label htmlFor="template">Template</label>
+      <label htmlFor="template">შაბლონი</label>
       <select
         id="template"
         name="templateId"
@@ -172,7 +184,7 @@ const MasterclassCreate = () => {
         onChange={handleChange}
         required
       >
-        {templates.map(template => (
+        {templates.map((template) => (
           <option key={template.id} value={template.id}>
             {template.title}
           </option>
@@ -180,7 +192,7 @@ const MasterclassCreate = () => {
       </select>
 
       <button type="submit" disabled={isSubmitting}>
-        {isSubmitting ? 'Creating...' : 'Create Masterclass'}
+        {isSubmitting ? "შექმნა..." : "მასტერკლასის შექმნა"}
       </button>
     </form>
   );

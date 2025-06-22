@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { getAllMasterclasses, deleteMasterclass } from '../../api/api'; // Make sure to import deleteMasterclass
-import '../styles.css';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { getAllMasterclasses, deleteMasterclass } from "../../api/api"; // Make sure to import deleteMasterclass
+import "../styles.css";
 
 const MasterclassDashboard = () => {
   const [masterclasses, setMasterclasses] = useState([]);
@@ -18,43 +18,42 @@ const MasterclassDashboard = () => {
       const response = await getAllMasterclasses();
       setMasterclasses(response.data);
     } catch (err) {
-      setError(err.message || 'Failed to load masterclasses');
+      setError(err.message || "მასტერკლასების ჩატვირთვა ვერ მოხერხდა");
     } finally {
       setLoading(false);
     }
   };
 
   const handleDelete = async (id, title) => {
-    if (!window.confirm(`Are you sure you want to delete "${title}"?`)) {
+    if (!window.confirm(`დარწმუნებული ხართ, რომ გინდათ წაშალოთ "${title}"?`)) {
       return;
     }
-    
+
     try {
       await deleteMasterclass(id);
-      // Remove the deleted masterclass from the state
-      setMasterclasses(masterclasses.filter(mc => mc.id !== id));
-      // Optional: Show a success message
-      alert('Masterclass deleted successfully');
+      setMasterclasses(masterclasses.filter((mc) => mc.id !== id));
+      alert("მასტერკლასი წარმატებით წაიშალა");
     } catch (err) {
-      setError(err.message || 'Failed to delete masterclass');
+      setError(err.message || "მასტერკლასის წაშლა ვერ მოხერხდა");
     }
   };
 
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  if (loading) return <div className="loading">Loading masterclasses...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
+  if (loading)
+    return <div className="loading">მასტერკლასების ჩატვირთვა...</div>;
+  if (error) return <div className="error">შეცდომა: {error}</div>;
 
   return (
     <div className="dashboard-container">
       <header className="dashboard-header">
-        <h1>Masterclass Dashboard</h1>
+        <h1>მასტერკლასების პანელი</h1>
         <nav className="dashboard-nav">
           <Link to="/masterclasses/create" className="create-button">
-            + Create New Masterclass
+            + ახალი მასტერკლასის შექმნა
           </Link>
         </nav>
       </header>
@@ -65,35 +64,42 @@ const MasterclassDashboard = () => {
             <div key={masterclass.id} className="masterclass-card">
               <div className="card-header">
                 <h2>{masterclass.template.title}</h2>
-                <span className={`status-badge ${masterclass.definate ? 'confirmed' : 'pending'}`}>
-                  {masterclass.definate ? 'Confirmed' : 'Pending'}
+                <span
+                  className={`status-badge ${
+                    masterclass.definate ? "confirmed" : "pending"
+                  }`}
+                >
+                  {masterclass.definate ? "დადასტურებულია" : "მოლოდინში"}
                 </span>
               </div>
-              
+
               <div className="card-body">
                 <div className="info-row">
-                  <span className="info-label">Date:</span>
+                  <span className="info-label">თარიღი:</span>
                   <span>{formatDate(masterclass.date)}</span>
                 </div>
-                
+
                 <div className="info-row">
-                  <span className="info-label">Duration:</span>
-                  <span>{masterclass.daysLong} day(s)</span>
+                  <span className="info-label">ხანგრძლივობა:</span>
+                  <span>{masterclass.daysLong} დღე(ები)</span>
                 </div>
-                
+
                 <div className="info-row">
-                  <span className="info-label">Lecturer:</span>
+                  <span className="info-label">ლექტორი:</span>
                   <span>
-                    {masterclass.template.lecturer?.firstName || ''} {masterclass.template.lecturer?.lastName || ''}
+                    {masterclass.template.lecturer?.firstName || ""}{" "}
+                    {masterclass.template.lecturer?.lastName || ""}
                   </span>
                 </div>
-                
+
                 <div className="info-row">
-                  <span className="info-label">Type:</span>
-                  <span>{masterclass.theoretical ? 'Theoretical' : 'Practical'}</span>
+                  <span className="info-label">ტიპი:</span>
+                  <span>
+                    {masterclass.theoretical ? "თეორიული" : "პრაქტიკული"}
+                  </span>
                 </div>
               </div>
-              
+
               <div className="card-footer">
                 <Link
                   to="#"
@@ -103,16 +109,16 @@ const MasterclassDashboard = () => {
                   }}
                   className="action-button delete-button"
                 >
-                  Delete
+                  წაშლა
                 </Link>
                 {masterclass.link && (
-                  <a 
-                    href={masterclass.link} 
-                    target="_blank" 
+                  <a
+                    href={masterclass.link}
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="action-button view-button"
                   >
-                    View Details
+                    დეტალების ნახვა
                   </a>
                 )}
               </div>
@@ -120,9 +126,9 @@ const MasterclassDashboard = () => {
           ))
         ) : (
           <div className="empty-state">
-            <p>No masterclasses found.</p>
-            <Link to="/masterclass/create" className="create-button">
-              Create your first masterclass
+            <p>მასტერკლასები არ არის.</p>
+            <Link to="/masterclasses/create" className="create-button">
+              შექმენით თქვენი პირველი მასტერკლასი
             </Link>
           </div>
         )}
