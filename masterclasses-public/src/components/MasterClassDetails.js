@@ -147,7 +147,7 @@ const MasterclassDetail = () => {
             </div>
             <div className="lecturer-info">
               <h2>თქვენი ინსტრუქტორი</h2>
-              <h3>{masterclass.template.lecturer.firstName + masterclass.template.lecturer.lastName}</h3>
+              <h3>{masterclass.template.lecturer.firstName} {masterclass.template.lecturer.lastName}</h3>
               <p className="specialty">{masterclass.template.lecturer.specialty}</p>
             </div>
           </div>

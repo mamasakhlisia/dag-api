@@ -19,6 +19,7 @@ public class HomePageController {
 
     @GetMapping
     public ResponseEntity<HomePage> getContent(){
+
         return new ResponseEntity<>(homePageService.getContent(), HttpStatus.OK);
     }
 

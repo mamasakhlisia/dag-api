@@ -1,6 +1,7 @@
 package com.nexident.masterclass_admin.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nexident.masterclass_admin.dto.HomeCard;
 import com.nexident.masterclass_admin.entity.HomePage;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class HomePageService {
     public HomePage getContent(){
         try{
             Path filePath = getContentFilePath();
+            System.out.println("Trying to access file at: " + filePath.toAbsolutePath());
 
             if(!Files.exists(filePath)){
                 HomePage defaultContent = createDefaultContent();
@@ -59,8 +61,14 @@ public class HomePageService {
                 "ჩვენი მასტერკლასებს ატარებენ საერთაშორისოდ აღიარებული ინსტრუქტორები, გადმოგცემენ ათწლეულების დაგროვებულ კლინიკურ გამოცდილებას და გადმოგცემენ პროფესიონალურ ცოდნას. ჩვენ დიდ ყურადღებას ვაქცევთ პრაქტიკულ, მალევე დანერგვად ტექნიკებს რომლებიც გამოგადგებათ მასტერკლასის დამთავრებისთანავე ",
                 "მწირი რაოდენობის მოსწავლეებით და საუკეთესო დონის აპარატურით, ყველა მონაწილეს ექნება პერსონალიზირებული ყურადღება და ოპტიმალური სწავლის პირობები"
         ));
-        content.setFooterText("");
+        content.setCards(Arrays.asList(
+                new HomeCard("სახელი", "აუცილებელი ინფორმაცია ამის შესახებ")
+        ));
+        content.setRatings(Arrays.asList(
+                new HomeCard("სახელი და გვარი", "შეუდარებელი მასტერკლასი, უმალცე შევძელი ცოდნის გამოყენება")
+        ));
 
+        content.setFooterText("რენდომ ტექსტი კომპანიის შესახებ");
         content.setFacebook("https://facebook.com/masterclass");
         content.setLinkedIn("");
         content.setInstagram("");
