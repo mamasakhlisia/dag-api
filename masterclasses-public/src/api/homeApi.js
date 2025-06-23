@@ -12,19 +12,3 @@ export const fetchHomeContent = () => {
       throw error; // Re-throw to let the caller handle it
     });
 };
-
-// Option 2: Export the data directly (after awaiting)
-let homeContentData = null;
-
-export const loadHomeContent = async () => {
-  try {
-    const response = await fetch(`${API_BASE_URL}/api/home-content`);
-    homeContentData = await response.json();
-    return homeContentData;
-  } catch (error) {
-    console.error('Failed to load home content:', error);
-    return null;
-  }
-};
-
-export { homeContentData };

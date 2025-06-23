@@ -1,6 +1,7 @@
 package com.nexident.masterclass_admin.controller;
 
 import com.nexident.masterclass_admin.entity.HomePage;
+import com.nexident.masterclass_admin.service.HomeImagesService;
 import com.nexident.masterclass_admin.service.HomePageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,15 +13,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/home-content")
 public class HomePageController {
     private final HomePageService homePageService;
+    private final HomeImagesService homeImagesService;
 
-    public HomePageController(HomePageService homePageService){
+    public HomePageController(HomePageService homePageService, HomeImagesService homeImagesService){
         this.homePageService = homePageService;
+        this.homeImagesService = homeImagesService;
     }
 
     @GetMapping
     public ResponseEntity<HomePage> getContent(){
 
-        return new ResponseEntity<>(homePageService.getContent(), HttpStatus.OK);
+        return new ResponseEntity<>(homePageService.getContent() , HttpStatus.OK);
     }
 
     @PutMapping

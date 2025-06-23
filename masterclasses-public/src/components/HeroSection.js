@@ -4,13 +4,13 @@ import { fetchHomeContent } from "../api/homeApi";
 const HeroSection = () => {
 const [header, setHeader] = useState([]);
 const [paragraph, setParagraph] = useState([]);
+const [image, setImage] = useState([]);
 
 
 useEffect(() =>{
   const loadContent = async () => {
     try {
       const data = await fetchHomeContent();
-      console.log(data);
       setHeader(data.navHeader || []); 
       setParagraph(data.navParagraph || []);
     } catch (error) {

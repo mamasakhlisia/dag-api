@@ -8,7 +8,6 @@ const FooterSelection = () => {
     const loadContent = async () => {
       try {
         const data = await fetchHomeContent();
-        console.log(data);
         setText(data.footerText || []); 
       } catch (error) {
         console.error("Failed to load about content:", error);
@@ -55,14 +54,14 @@ const FooterSelection = () => {
             <h4 className="footer-title">საკონტაქტო ინფორმაცია</h4>
             <div className="contact-info">
               <p>
-                <i className="fas fa-map-marker-alt"></i> ქ.შარაშიძის ქუჩა
+                <i className="fas fa-map-marker-alt"></i> ქ.შარაშიძის ქუჩა N14
               </p>
               <p>
-                <i className="fas fa-phone"></i> +1 (617) 555-0123
+                <i className="fas fa-phone"></i> (+995) 595 15 02 99
               </p>
               <p>
                 <i className="fas fa-envelope"></i>{" "}
-                education@dentalexcellence.com
+                info@dag.ge
               </p>
               <p>
                 <i className="fas fa-clock"></i> ორშ-შაბ: 9:00 - 18:00

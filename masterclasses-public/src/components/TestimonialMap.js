@@ -1,4 +1,20 @@
+import { useState, useEffect } from "react";
+import { fetchHomeContent } from "../api/homeApi";
+
 const TestimonialMapSelection = () => {
+  const [ratings, setRatings] = useState([]);
+    useEffect(() =>{
+      const loadContent = async () => {
+        try {
+          const data = await fetchHomeContent();
+          setRatings(data.ratings || []); 
+        } catch (error) {
+          console.error("Failed to load about content:", error);
+        }
+      };
+    
+      loadContent();
+    }, []);
   return (
     <section className="card-section">
       <div className="container">
@@ -7,21 +23,21 @@ const TestimonialMapSelection = () => {
           <div className="col-lg-6">
             <div className="card-style testimonial-card">
               <h3 className="section-title">შეფასებები</h3>
-              <div className="single-testimonial">
-                <div className="testimonial-author d-flex align-items-center gap-3 mt-3">
-                 <div>
-                    <h4 className="author-name mb-0">Dr. James Wilson</h4>
+              {ratings.map(item => (
+                <div className="single-testimonial">
+                  <div className="testimonial-author d-flex align-items-center gap-3 mt-3">
+                  <div>
+                      <h4 className="author-name mb-0">{item.title}</h4>
+                    </div>
+                  </div>
+                  <div className="testimonial-content">
+                    <p>
+                      {item.info}
+                    </p>
                   </div>
                 </div>
-                <div className="testimonial-content">
-                  <p>
-                    The Advanced Implantology masterclass completely changed my
-                    approach to implant placement. The hands-on training was
-                    exceptional, and I've already implemented several techniques
-                    that have improved my success rates.
-                  </p>
-                </div>
-              </div>
+              ))}
+
             </div>
             
           </div>
@@ -39,16 +55,16 @@ const TestimonialMapSelection = () => {
               ></iframe>
               <div className="map-info mt-3">
                 <p>
-                  <i className="fas fa-map-marker-alt"></i> ქ.შარაშიძის ქუჩა
+                  <i className="fas fa-map-marker-alt"></i> ქ.შარაშიძის ქუჩა N14
                   <br />
                   თბილისი
                 </p>
                 <p>
-                  <i className="fas fa-phone"></i> +1 (617) 555-0123
+                  <i className="fas fa-phone"></i>(+995) 595 15 02 99
                 </p>
                 <p>
                   <i className="fas fa-envelope"></i>{" "}
-                  education@dentalexcellence.com
+                  info@dag.ge
                 </p>
               </div>
             </div>
